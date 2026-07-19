@@ -4,16 +4,16 @@ const isDevVariant = process.env.APP_VARIANT === 'development';
 
 function getApplicatioName() {
   if (isDevVariant) {
-    return 'RN Template (Dev)';
+    return 'Bus Tracking Parent App (Dev)';
   }
-  return 'RN Template';
+  return 'Bus Tracking Parent App';
 }
 
 function getBundlerIdentifier() {
   if (isDevVariant) {
-    return 'com.wdftech.rnmt.dev';
+    return 'com.jm.bustracking.parent.dev';
   }
-  return 'com.wdftech.rnmt';
+  return 'com.jm.bustracking.parent.dev';
 }
 
 export default (context: ConfigContext): ExpoConfig => ({

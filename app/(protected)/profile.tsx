@@ -4,6 +4,7 @@ import SettingsTile from '@/components/Profile/SettingsTile';
 import { StyledText } from '@/components/styled/StyledText';
 import { useAuthContext } from '@/contexts/auth.context';
 import { useAppTheme } from '@/hooks/useAppTheme';
+import { useMyStudents } from '@/hooks/use-parent';
 import { useRouter } from 'expo-router';
 import { Alert, Linking, ScrollView, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -12,7 +13,8 @@ import { StyleSheet } from 'react-native-unistyles';
 const Profile = () => {
   const router = useRouter();
   const { theme, updateTheme } = useAppTheme();
-  const { logOut } = useAuthContext();
+  const { user, logOut } = useAuthContext();
+  const { data: students } = useMyStudents();
 
   const handleLogout = () => {
     Alert.alert('Log Out', 'Are you sure you want to log out?', [
@@ -21,10 +23,18 @@ const Profile = () => {
     ]);
   };
 
+  const displayName = user?.name ?? 'John Doe';
+  const displayRole = user?.role
+    ? user.role.charAt(0) + user.role.slice(1).toLowerCase()
+    : 'Parent';
+  const childCount = students?.length ?? 0;
+  const childLabel =
+    childCount > 0 ? `${childCount} ${childCount === 1 ? 'Child' : 'Children'}` : 'No children';
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.contentContainer}>
-        <ProfileHeader name='John Doe' role='School Bus Driver' busNumber='BUS-101' />
+        <ProfileHeader name={displayName} role={displayRole} busNumber={childLabel} />
 
         <View style={styles.section}>
           <SettingsTile
@@ -35,9 +45,9 @@ const Profile = () => {
           />
           <View style={styles.divider} />
           <SettingsTile
-            label='Upcoming Schedule'
-            icon='calendar-outline'
-            onPress={() => router.push('/(protected)/(stack)/map')}
+            label='My Children'
+            icon='people-outline'
+            onPress={() => router.push('/(protected)')}
           />
           <View style={styles.divider} />
           <SettingsTile

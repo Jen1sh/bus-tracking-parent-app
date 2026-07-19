@@ -12,6 +12,8 @@
       "@/lib/*": ["./src/lib/*"],
       "@/types/*": ["./src/types/*"],
       "@/interfaces/*": ["./src/interfaces/*"],
+      "@/services/*": ["./src/services/*"],
+      "@/store": ["./src/store/index"],
       "@/store/*": ["./src/store/*"],
       "@/unistyles/*": ["./src/unistyles/*"],
       "@/utils/*": ["./src/utils/*"]

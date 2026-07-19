@@ -7,14 +7,45 @@ import React, { useState } from 'react';
 import { Image, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { StyleSheet } from 'react-native-unistyles';
+import Toast from 'react-native-toast-message';
+import { isAxiosError } from '@/lib/axios';
 
 const SignIn = () => {
-  const { storeToken } = useAuthContext();
+  const { login } = useAuthContext();
 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [passwordShown, setPasswordShown] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const login = () => {
-    storeToken('my-token');
+  const handleLogin = async () => {
+    if (!email.trim() || !password) {
+      Toast.show({ type: 'error', text1: 'Validation', text2: 'Please enter email and password' });
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      await login(email.trim(), password);
+    } catch (err) {
+      if (isAxiosError(err) && err.response?.data) {
+        const apiErr = err.response.data as { message?: string; error?: string };
+        Toast.show({
+          type: 'error',
+          text1: apiErr.message ?? 'Login failed',
+          text2: apiErr.error ?? undefined,
+        });
+      } else {
+        Toast.show({
+          type: 'error',
+          text1: 'Login failed',
+          text2: err instanceof Error ? err.message : 'An unexpected error occurred',
+        });
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -33,11 +64,14 @@ const SignIn = () => {
       </View>
       <View style={styles.formContainer}>
         <StyledTextInput
-          autoComplete='off'
+          autoComplete='email'
           autoCapitalize='none'
           autoCorrect={false}
-          placeholder='Username'
+          placeholder='Email'
           leftIcon='account-alert-outline'
+          value={email}
+          onChangeText={setEmail}
+          keyboardType='email-address'
         />
         <StyledTextInput
           autoComplete='off'
@@ -48,8 +82,16 @@ const SignIn = () => {
           secureTextEntry={!passwordShown}
           onRightIconPress={() => setPasswordShown(ps => !ps)}
           rightIcon={passwordShown ? 'eye-off-outline' : 'eye-outline'}
+          value={password}
+          onChangeText={setPassword}
         />
-        <StyledButton icon='log-in-outline' title='Log in' onPress={login} />
+        <StyledButton
+          icon='log-in-outline'
+          title='Log in'
+          onPress={handleLogin}
+          loading={isLoading}
+          disabled={isLoading}
+        />
       </View>
     </KeyboardAwareScrollView>
   );

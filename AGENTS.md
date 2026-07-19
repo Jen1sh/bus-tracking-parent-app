@@ -1,4 +1,4 @@
-# AGENTS.md — bus-tracking-driver-app
+# AGENTS.md — bus-tracking-parent-app
 
 ## Project
 
@@ -71,6 +71,11 @@ All `@/` aliases are defined in `tsconfig.json` paths:
 - **Modular components**: Extract significant chunks of UI + logic into dedicated component files (bottom sheets, tab content, list items, etc.) to keep screens lean and components reusable.
 - **Feature grouping**: Co-locate related components under a feature directory (e.g. `src/components/map/`).
 
+## Redesign reference
+
+The file `session-ses_0abf.md` in the project root contains the full build session log from the **bus-tracking-driver-app** redesign. It documents all component patterns, file structure, data flow, and fixes applied. Use this as the primary reference for the parent app redesign — the same UI patterns, component architecture, and patterns should be followed.
+
 ## Skills
 
-`.agents/skills/` contains technique references for Expo workflows (deployment, dev-client, API routes, modules, brownfield, App Clip, Tailwind, SwiftUI/Jetpack Compose UI, data fetching, upgrade insights). Also listed in `skills-lock.json`. Load via the skill tool prefix when a task matches.
+- `.agents/skills/` — Expo workflows (deployment, dev-client, API routes, modules, brownfield, App Clip, Tailwind, SwiftUI/Jetpack Compose UI, data fetching, upgrade insights). Also listed in `skills-lock.json`.
+- `.opencode/skills/ui-ux-pro-max/` — UI/UX design intelligence with searchable database (styles, colors, typography, UX guidelines, charts). Requires Python. Load via the skill tool prefix when a task matches.
