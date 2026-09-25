@@ -13,13 +13,13 @@ function getBundlerIdentifier() {
   if (isDevVariant) {
     return 'com.jm.bustracking.parent.dev';
   }
-  return 'com.jm.bustracking.parent.dev';
+  return 'com.jm.bustracking.parent';
 }
 
 export default (context: ConfigContext): ExpoConfig => ({
   ...context,
   name: getApplicatioName(),
-  slug: 'react-native-managed-template',
+  slug: 'bus-tracking-parent',
   scheme: 'rnmt',
   version: '1.0.0',
   orientation: 'portrait',
@@ -77,5 +77,10 @@ export default (context: ConfigContext): ExpoConfig => ({
   ],
   experiments: {
     typedRoutes: true,
+  },
+  extra: {
+    eas: {
+      projectId: 'd57345e1-0cd5-4d4d-a7ba-562555203012',
+    },
   },
 });

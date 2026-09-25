@@ -7,7 +7,7 @@ import axios, { isAxiosError } from 'axios';
 export { isAxiosError };
 
 const client = axios.create({
-  baseURL: 'http://10.0.2.2:8080/api/',
+  baseURL: 'https://15.252.87.118.sslip.io/api/',
 });
 
 type QueueEntry = {
